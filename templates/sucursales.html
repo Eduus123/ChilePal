@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+
+{% block title %}
+Sucursales — Chilepal
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+  <h2 class="page-title">
+
+    Sucursales
+
+  </h2>
+
+</div>
+
+<details
+  style="margin-bottom:1.5rem"
+>
+
+  <summary
+
+    class="btn-primary"
+
+    style="
+      display:inline-block;
+      cursor:pointer
+    "
+  >
+
+    + Agregar sucursal
+
+  </summary>
+
+  <form
+
+    method="POST"
+
+    action="/admin/agregar_sucursal"
+
+    style="
+      background:#fff;
+      padding:1.5rem;
+      border-radius:12px;
+      margin-top:.75rem;
+
+      display:grid;
+
+      grid-template-columns:
+      1fr 1fr;
+
+      gap:1rem;
+
+      box-shadow:var(--sombra)
+    "
+  >
+
+    <div class="form-group">
+
+      <label>
+
+        Ciudad
+
+      </label>
+
+      <input
+        type="text"
+        name="ciudad"
+        required
+      >
+
+    </div>
+
+    <div class="form-group">
+
+      <label>
+
+        Teléfono
+
+      </label>
+
+      <input
+        type="text"
+        name="telefono"
+      >
+
+    </div>
+
+    
+
+    <div
+      class="form-group"
+      style="grid-column:1/-1"
+    >
+
+      <label>
+
+        Dirección
+
+      </label>
+
+      <input
+        type="text"
+        name="direccion"
+        required
+      >
+
+    </div>
+
+    <div style="grid-column:1/-1">
+
+      <button
+        type="submit"
+        class="btn-primary"
+      >
+
+        Guardar sucursal
+
+      </button>
+
+    </div>
+
+  </form>
+
+</details>
+
+<div class="table-wrapper">
+
+  <table class="data-table">
+
+    <thead>
+
+      <tr>
+
+        <th>#</th>
+
+        <th>Ciudad</th>
+
+        <th>Dirección</th>
+
+        <th>Teléfono</th>
+
+        <th>Estado</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      {% for s in sucursales %}
+
+      <tr>
+
+        <td>
+
+          {{ s.id_sucursal }}
+
+        </td>
+
+        <td>
+
+          {{ s.ciudad }}
+
+        </td>
+
+        <td>
+
+          {{ s.direccion }}
+
+        </td>
+
+        <td>
+
+          {{ s.telefono or '—' }}
+
+        </td>
+
+        
+
+        <td>
+
+          <span
+            class="
+              status-badge
+              status-entregado
+            "
+          >
+
+            Activa
+
+          </span>
+
+        </td>
+
+      </tr>
+
+      {% endfor %}
+
+    </tbody>
+
+  </table>
+
+</div>
+
+{% endblock %}

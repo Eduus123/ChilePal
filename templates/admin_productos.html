@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}Productos — Chilepal{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <h2 class="page-title">Gestión de Productos y Stock</h2>
+</div>
+
+<details style="margin-bottom:1.5rem">
+  <summary class="btn-primary" style="display:inline-block;cursor:pointer">+ Agregar producto</summary>
+  <form method="POST" action="/admin/agregar_producto"
+        style="background:#fff;padding:1.5rem;border-radius:12px;margin-top:.75rem;
+               display:grid;grid-template-columns:1fr 1fr;gap:1rem;box-shadow:var(--sombra)">
+
+    <div class="form-group">
+      <label>Nombre</label>
+      <input type="text" name="nombre" required>
+    </div>
+
+    <div class="form-group">
+      <label>Variedad</label>
+      <input type="text" name="variedad" required placeholder="hass, mango, naranja...">
+    </div>
+
+    <div class="form-group">
+      <label>Calibre</label>
+      <select name="calibre">
+        <option value="">— Sin calibre —</option>
+        <option>extra</option>
+        <option>primera</option>
+        <option>segunda</option>
+        <option>tercera</option>
+        <option>descarte</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Precio por kg ($)</label>
+      <input type="number" name="precio_kg" step="0.01" required>
+    </div>
+
+    <div class="form-group">
+      <label>¿Es de temporada?</label>
+      <select name="es_temporada">
+        <option value="0">No</option>
+        <option value="1">Sí</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Sucursal inicial</label>
+      <select name="id_sucursal_inicial">
+        <option value="">— Sin stock inicial —</option>
+        {% for s in sucursales %}
+          <option value="{{ s.id_sucursal }}">{{ s.ciudad }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group" style="grid-column:1/-1">
+      <label>Stock inicial (kg) para la sucursal seleccionada</label>
+      <input type="number" name="stock_inicial" min="0" step="0.5" value="0">
+    </div>
+
+    <div style="grid-column:1/-1">
+      <button type="submit" class="btn-primary">Guardar producto</button>
+    </div>
+  </form>
+</details>
+
+<h3 style="margin-bottom:.75rem;color:var(--verde)">Stock por sucursal</h3>
+<div class="table-wrapper">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Sucursal</th>
+        <th>Stock (kg)</th>
+        <th>Actualizar</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in stock %}
+      <tr>
+        <td>{{ s.nombre }}</td>
+        <td>{{ s.ciudad }}</td>
+        <td>{{ "{:,.1f}".format(s.cantidad_kg) }}</td>
+        <td>
+          <form method="POST" action="/admin/actualizar_stock"
+                style="display:flex;gap:.5rem;align-items:center">
+            <input type="hidden" name="id_producto" value="{{ s.id_producto }}">
+            <input type="hidden" name="id_sucursal" value="{{ s.id_sucursal }}">
+            <input type="number" name="cantidad_kg" value="{{ s.cantidad_kg }}"
+                   step="0.5" min="0"
+                   style="width:90px;padding:4px 8px;border:1px solid var(--borde);border-radius:6px">
+            <button class="btn-sm btn-green">Guardar</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

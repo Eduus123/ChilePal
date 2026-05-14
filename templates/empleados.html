@@ -1,0 +1,314 @@
+{% extends "base.html" %}
+
+{% block title %}
+Empleados — Chilepal
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+  <h2 class="page-title">
+
+    Gestión de Empleados
+
+  </h2>
+
+</div>
+
+<details
+  style="margin-bottom:1.5rem"
+>
+
+  <summary
+
+    class="btn-primary"
+
+    style="
+      display:inline-block;
+      cursor:pointer
+    "
+  >
+
+    + Agregar empleado
+
+  </summary>
+
+  <form
+
+    method="POST"
+
+    action="/admin/agregar_empleado"
+
+    style="
+      background:#fff;
+      padding:1.5rem;
+      border-radius:12px;
+      margin-top:.75rem;
+
+      display:grid;
+
+      grid-template-columns:
+      1fr 1fr;
+
+      gap:1rem;
+
+      box-shadow:var(--sombra)
+    "
+  >
+
+    <div class="form-group">
+
+      <label>Nombre</label>
+
+      <input
+        type="text"
+        name="nombre"
+        required
+      >
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Email</label>
+
+      <input
+        type="email"
+        name="email"
+        required
+      >
+
+    </div>
+
+    
+
+    <div class="form-group">
+
+      <label>Contraseña</label>
+
+      <input
+        type="password"
+        name="password"
+        required
+      >
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Teléfono</label>
+
+      <input
+        type="text"
+        name="telefono"
+      >
+
+    </div>
+
+    
+
+    <div class="form-group">
+
+      <label>Rol</label>
+
+      <select name="rol">
+
+        <option value="vendedor">
+          Vendedor
+        </option>
+
+        <option value="frigorifico">
+          Frigorífico
+        </option>
+
+        <option value="repartidor">
+          Repartidor
+        </option>
+
+        <option value="admin">
+          Admin
+        </option>
+
+      </select>
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Sucursal</label>
+
+      <select name="id_sucursal">
+
+        {% for s in sucursales %}
+
+          <option
+            value="{{ s.id_sucursal }}"
+          >
+
+            {{ s.ciudad }}
+
+          </option>
+
+        {% endfor %}
+
+      </select>
+
+    </div>
+
+    <div style="grid-column:1/-1">
+
+      <button
+        type="submit"
+        class="btn-primary"
+      >
+
+        Guardar empleado
+
+      </button>
+
+    </div>
+
+  </form>
+
+</details>
+
+<div class="table-wrapper">
+
+  <table class="data-table">
+
+    <thead>
+
+      <tr>
+
+        <th>#</th>
+
+        <th>Nombre</th>
+
+        <th>Email</th>
+
+        <th>Rol</th>
+
+        <th>Sucursal</th>
+
+        <th>Estado</th>
+
+        <th>Acción</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      {% for e in empleados %}
+
+      <tr>
+
+        <td>
+          {{ e.id_usuario }}
+        </td>
+
+        <td>
+          {{ e.nombre }}
+        </td>
+
+        <td>
+          {{ e.email }}
+        </td>
+
+        
+
+        <td>
+
+          <span
+            class="
+              status-badge
+              status-confirmado
+            "
+          >
+
+            {{ e.rol }}
+
+          </span>
+
+        </td>
+
+        <td>
+
+          {{ e.sucursal or '—' }}
+
+        </td>
+
+        
+
+        <td>
+
+          {% if e.activo %}
+
+            <span
+              class="
+                status-badge
+                status-entregado
+              "
+            >
+
+              Activo
+
+            </span>
+
+          {% else %}
+
+            <span
+              class="
+                status-badge
+                status-cancelado
+              "
+            >
+
+              Inactivo
+
+            </span>
+
+          {% endif %}
+
+        </td>
+
+        
+
+        <td>
+
+          {% if e.activo
+             and e.id_usuario != current_user.db_id
+          %}
+
+          <form
+            method="POST"
+            action="/admin/desactivar_empleado/{{ e.id_usuario }}"
+          >
+
+            <button
+              class="btn-sm btn-red"
+            >
+
+              Desactivar
+
+            </button>
+
+          </form>
+
+          {% endif %}
+
+        </td>
+
+      </tr>
+
+      {% endfor %}
+
+    </tbody>
+
+  </table>
+
+</div>
+
+{% endblock %}

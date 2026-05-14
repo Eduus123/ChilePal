@@ -1,0 +1,283 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard Empleado — Chilepal
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+  <h2 class="page-title">
+
+    {% if rol == 'vendedor' %}
+
+      Panel Vendedor
+
+    {% elif rol == 'frigorifico' %}
+
+      Panel Frigorífico
+
+    {% else %}
+
+      Panel Repartidor
+
+    {% endif %}
+
+  </h2>
+
+</div>
+
+<div class="table-wrapper">
+
+  <table class="data-table">
+
+    <thead>
+
+      <tr>
+
+        <th>#</th>
+
+        <th>Cliente</th>
+
+        <th>Producto</th>
+
+        <th>Cantidad</th>
+
+        <th>Total</th>
+
+        <th>Sucursal</th>
+
+        <th>Estado</th>
+
+        <th>Acción</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      {% for p in pedidos %}
+
+      <tr>
+
+        <td>
+          {{ p.id_pedido }}
+        </td>
+
+        <td>
+          {{ p.cliente }}
+        </td>
+
+        <td>
+          {{ p.producto or '—' }}
+        </td>
+
+        <td>
+
+          {{
+            "{:,.1f}".format(
+              p.cantidad_kg
+            )
+
+            if p.cantidad_kg
+            else '—'
+          }}
+
+          kg
+
+        </td>
+
+        <td>
+
+          ${{
+            "{:,.0f}".format(
+              p.total
+            )
+          }}
+
+        </td>
+
+        <td>
+          {{ p.sucursal }}
+        </td>
+
+        
+
+        <td>
+
+          <span
+            class="
+              status-badge
+              status-{{ p.estado }}
+            "
+          >
+
+            {{
+              p.estado
+              .replace('_',' ')
+              .title()
+            }}
+
+          </span>
+
+        </td>
+
+        
+
+        <td class="actions">
+
+          {% if rol == 'vendedor'
+             and p.estado == 'pendiente'
+          %}
+
+            <form
+              method="POST"
+              action="/pedido/confirmar/{{ p.id_pedido }}"
+              style="display:inline"
+            >
+
+              <button
+                class="btn-sm btn-green"
+              >
+
+                Confirmar
+
+              </button>
+
+            </form>
+
+            <form
+              method="POST"
+              action="/pedido/cancelar/{{ p.id_pedido }}"
+              style="display:inline"
+            >
+
+              <button
+                class="btn-sm btn-red"
+              >
+
+                Cancelar
+
+              </button>
+
+            </form>
+
+          {% elif rol == 'frigorifico'
+             and p.estado == 'confirmado'
+          %}
+
+            <form
+              method="POST"
+              action="/pedido/preparar/{{ p.id_pedido }}"
+              style="display:inline"
+            >
+
+              <button
+                class="btn-sm btn-green"
+              >
+
+                Preparar
+
+              </button>
+
+            </form>
+
+            <form
+              method="POST"
+              action="/pedido/despachar/{{ p.id_pedido }}"
+              style="display:inline"
+            >
+
+              <button
+                class="btn-sm btn-orange"
+              >
+
+                Despachar
+
+              </button>
+
+            </form>
+
+          {% elif rol == 'repartidor'
+             and p.estado == 'despachado'
+          %}
+
+            
+
+            <form
+              method="POST"
+              action="/pedido/entregar/{{ p.id_pedido }}"
+              style="display:inline"
+            >
+
+              <select
+                name="metodo"
+                class="select-sm"
+              >
+
+                <option value="efectivo">
+                  Efectivo
+                </option>
+
+                <option value="transferencia">
+                  Transferencia
+                </option>
+
+                <option value="cheque">
+                  Cheque
+                </option>
+
+              </select>
+
+              <button
+                class="btn-sm btn-green"
+              >
+
+                Entregar
+
+              </button>
+
+            </form>
+
+          {% else %}
+
+            <span class="text-muted">
+
+              —
+
+            </span>
+
+          {% endif %}
+
+        </td>
+
+      </tr>
+
+      {% else %}
+
+      
+
+      <tr>
+
+        <td
+          colspan="8"
+          class="empty-row"
+        >
+
+          No hay pedidos asignados.
+
+        </td>
+
+      </tr>
+
+      {% endfor %}
+
+    </tbody>
+
+  </table>
+
+</div>
+
+{% endblock %}

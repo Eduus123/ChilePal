@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Inicio - Chilepal
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1 class="page-title">
+    🥑 Bienvenido a Chilepal
+  </h1>
+  <p class="page-sub">
+    Distribuidora de paltas y frutas de temporada en Chile
+  </p>
+</div>
+
+<!-- ── Sección de presentación ──────────────────────────────── -->
+<div style="background: var(--blanco); border-radius: 14px; padding: 2rem; box-shadow: var(--sombra); margin-bottom: 2rem;">
+
+  <div style="max-width: 700px; margin: 0 auto;">
+
+    <h2 style="font-family: 'Playfair Display', serif; color: var(--verde); font-size: 1.5rem; margin-bottom: 1rem;">
+      Sobre Nosotros
+    </h2>
+
+    <p style="color: var(--texto-suave); line-height: 1.6; margin-bottom: 1rem;">
+      <strong>Chilepal</strong> es una distribuidora especializada en la venta de paltas y frutas de temporada, 
+      operando desde dos sucursales estratégicas: <strong>Quillota</strong> y <strong>Chillán</strong>.
+    </p>
+
+    <p style="color: var(--texto-suave); line-height: 1.6; margin-bottom: 1rem;">
+      Nuestro sistema web permite a clientes revisar productos disponibles y realizar pedidos en línea, 
+      mientras que nuestros empleados administran eficientemente las ventas, inventario y sucursales según 
+      sus roles y responsabilidades.
+    </p>
+
+    <h3 style="font-size: 1.1rem; color: var(--verde); margin-top: 1.5rem; margin-bottom: 0.75rem;">
+      ¿Qué puedes hacer?
+    </h3>
+
+    <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.5rem;">
+      <li style="color: var(--texto-suave); padding-left: 1.5rem; position: relative;">
+        <span style="position: absolute; left: 0; color: var(--verde); font-weight: bold;">✓</span>
+        Explorar nuestro catálogo completo de productos
+      </li>
+      <li style="color: var(--texto-suave); padding-left: 1.5rem; position: relative;">
+        <span style="position: absolute; left: 0; color: var(--verde); font-weight: bold;">✓</span>
+        Realizar pedidos de forma segura y sencilla
+      </li>
+      <li style="color: var(--texto-suave); padding-left: 1.5rem; position: relative;">
+        <span style="position: absolute; left: 0; color: var(--verde); font-weight: bold;">✓</span>
+        Seguimiento completo del estado de tus pedidos
+      </li>
+      <li style="color: var(--texto-suave); padding-left: 1.5rem; position: relative;">
+        <span style="position: absolute; left: 0; color: var(--verde); font-weight: bold;">✓</span>
+        Acceso a múltiples sucursales en Chile
+      </li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ── Tarjetas de características ──────────────────────────── -->
+<div class="stats-grid" style="margin-bottom: 2rem;">
+
+  <div class="stat-card">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏪</div>
+    <div class="stat-value">2</div>
+    <div class="stat-label">Sucursales Activas</div>
+  </div>
+
+  <div class="stat-card">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🥑</div>
+    <div class="stat-value">8+</div>
+    <div class="stat-label">Productos Disponibles</div>
+  </div>
+
+  <div class="stat-card">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">📦</div>
+    <div class="stat-value">⚡</div>
+    <div class="stat-label">Despacho Rápido</div>
+  </div>
+
+  <div class="stat-card">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔒</div>
+    <div class="stat-value">100%</div>
+    <div class="stat-label">Seguro</div>
+  </div>
+
+</div>
+
+<!-- ── Llamada a la acción ──────────────────────────────────── -->
+<div style="background: linear-gradient(135deg, var(--verde) 0%, var(--verde-claro) 100%); border-radius: 14px; padding: 2.5rem; text-align: center; color: white;">
+
+  <h2 style="font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 1rem;">
+    Comienza a comprar ahora
+  </h2>
+
+  <p style="margin-bottom: 1.5rem; opacity: 0.95;">
+    Explora nuestro catálogo y realiza tu primer pedido en minutos
+  </p>
+
+  <a 
+    href="/catalogo" 
+    class="btn-primary"
+    style="background: white; color: var(--verde); display: inline-block; padding: 0.7rem 1.5rem; text-decoration: none; border-radius: 8px; font-weight: 600; border: none; cursor: pointer;"
+  >
+    Ver Catálogo →
+  </a>
+
+</div>
+
+<!-- ── Sección de sucursales ────────────────────────────────── -->
+<div style="margin-top: 2rem; padding: 2rem; background: var(--blanco); border-radius: 14px; box-shadow: var(--sombra);">
+
+  <h2 style="font-family: 'Playfair Display', serif; color: var(--verde); font-size: 1.3rem; margin-bottom: 1.5rem;">
+    Nuestras Sucursales
+  </h2>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+
+    <div style="padding: 1.5rem; border: 1px solid var(--borde); border-radius: 12px; background: var(--verde-fondo);">
+      <h3 style="color: var(--verde); margin-bottom: 0.75rem;">📍 Quillota</h3>
+      <p style="color: var(--texto-suave); font-size: 0.9rem; margin-bottom: 0.5rem;">
+        <strong>Dirección:</strong><br>
+        Av. Los Carrera 1240, Quillota
+      </p>
+      <p style="color: var(--texto-suave); font-size: 0.9rem;">
+        <strong>Teléfono:</strong><br>
+        +56 33 2123456
+      </p>
+    </div>
+
+    <div style="padding: 1.5rem; border: 1px solid var(--borde); border-radius: 12px; background: var(--verde-fondo);">
+      <h3 style="color: var(--verde); margin-bottom: 0.75rem;">📍 Chillán</h3>
+      <p style="color: var(--texto-suave); font-size: 0.9rem; margin-bottom: 0.5rem;">
+        <strong>Dirección:</strong><br>
+        Calle Arauco 890, Chillán
+      </p>
+      <p style="color: var(--texto-suave); font-size: 0.9rem;">
+        <strong>Teléfono:</strong><br>
+        +56 42 2234567
+      </p>
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}

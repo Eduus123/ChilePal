@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Catálogo — Chilepal{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <h2 class="page-title">Catálogo de Productos</h2>
+  <p class="page-sub">Selecciona el producto y la cantidad que necesitas</p>
+</div>
+
+<!-- Filtro por sucursal -->
+<div class="sucursal-tabs">
+  <a href="/catalogo"
+     class="sucursal-tab {% if not id_sucursal_activa %}active{% endif %}">
+    Todas las sucursales
+  </a>
+  {% for s in sucursales %}
+  <a href="/catalogo?sucursal={{ s.id_sucursal }}"
+     class="sucursal-tab {% if id_sucursal_activa == s.id_sucursal %}active{% endif %}">
+    📍 {{ s.ciudad }}
+  </a>
+  {% endfor %}
+</div>
+
+<div class="product-grid">
+  {% for p in productos %}
+  <div class="product-card">
+    <div class="product-badge {% if p.es_temporada %}badge-temp{% else %}badge-perm{% endif %}">
+      {% if p.es_temporada %}Temporada{% else %}Todo el año{% endif %}
+    </div>
+    <div class="product-icon">
+      {% if p.variedad == 'hass' %}🥑
+      {% elif p.variedad == 'mango' %}🥭
+      {% elif p.variedad == 'naranja' %}🍊
+      {% else %}🍋{% endif %}
+    </div>
+    <h3 class="product-name">{{ p.nombre }}</h3>
+    <p class="product-city">📍 {{ p.ciudad }}</p>
+    <div class="product-price">${{ "{:,.0f}".format(p.precio_kg) }} <span>/kg</span></div>
+    <p class="product-stock">Stock disponible: {{ "{:,.1f}".format(p.cantidad_kg) }} kg</p>
+
+    <form method="POST" action="/hacer_pedido" class="order-form">
+      <input type="hidden" name="id_producto" value="{{ p.id_producto }}">
+      <input type="hidden" name="id_sucursal" value="{{ p.id_sucursal }}">
+      <div class="form-group">
+        <label>Cantidad (kg)</label>
+        <input type="number" name="cantidad_kg" min="1" max="{{ p.cantidad_kg }}"
+               step="0.5" required placeholder="ej: 10">
+      </div>
+      <div class="form-group">
+        <label>Observaciones</label>
+        <input type="text" name="observaciones" placeholder="Opcional">
+      </div>
+      {% if current_user.is_authenticated %}
+        <button type="submit" class="btn-primary btn-full">Agregar pedido</button>
+      {% else %}
+        <a href="/login" class="btn-primary btn-full" style="text-align:center">
+          Inicia sesión para comprar
+        </a>
+      {% endif %}
+    </form>
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <span>😔</span>
+    <p>No hay productos disponibles{% if id_sucursal_activa %} en esta sucursal{% endif %}.</p>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

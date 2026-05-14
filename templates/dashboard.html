@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard Admin — Chilepal
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+  <h2 class="page-title">
+    Dashboard Administrativo
+  </h2>
+
+  <p class="page-sub">
+
+    Resumen general del sistema.
+
+  </p>
+
+</div>
+
+<div class="stats-grid">
+
+  <div class="stat-card">
+
+    <div class="stat-value">
+
+      {{ stats.total_pedidos }}
+
+    </div>
+
+    <div class="stat-label">
+
+      Pedidos totales
+
+    </div>
+
+  </div>
+
+  <div class="stat-card">
+
+    <div class="stat-value">
+
+      {{ stats.pedidos_pendientes }}
+
+    </div>
+
+    <div class="stat-label">
+
+      Pendientes
+
+    </div>
+
+  </div>
+
+  <div class="stat-card">
+
+    <div class="stat-value">
+
+      {{ stats.total_clientes }}
+
+    </div>
+
+    <div class="stat-label">
+
+      Clientes activos
+
+    </div>
+
+  </div>
+
+  
+
+  <div class="stat-card">
+
+    <div class="stat-value">
+
+      {{ stats.total_empleados }}
+
+    </div>
+
+    <div class="stat-label">
+
+      Empleados activos
+
+    </div>
+
+  </div>
+
+  
+
+  <div class="stat-card">
+
+    <div class="stat-value">
+
+      ${{ "{:,.0f}".format(
+        stats.ventas_totales
+      ) }}
+
+    </div>
+
+    <div class="stat-label">
+
+      Ventas totales
+
+    </div>
+
+  </div>
+
+</div>
+
+<h3
+  style="
+    margin-bottom:.75rem;
+    color:var(--verde)
+  "
+>
+
+  Últimas acciones del sistema
+
+</h3>
+
+<div class="log-list">
+
+  {% for log in logs %}
+
+    <div class="log-item">
+
+      <strong>
+
+        {{ log.usuario }}
+
+      </strong>
+
+      ({{ log.rol }})
+
+      —
+
+      {{ log.accion }}
+
+      :
+
+      {{ log.detalle }}
+
+      <div class="log-time">
+
+        {{ log.timestamp }}
+
+      </div>
+
+    </div>
+
+  {% else %}
+
+    
+
+    <p class="text-muted">
+
+      Sin registros todavía.
+
+    </p>
+
+  {% endfor %}
+
+</div>
+
+{% endblock %}

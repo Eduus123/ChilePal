@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+
+    Chilepal — Iniciar sesión
+
+  </title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    href="
+      https://fonts.googleapis.com/css2?
+      family=Playfair+Display:wght@600;700&
+      family=DM+Sans:wght@300;400;500;600&
+      display=swap
+    "
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/static/style.css"
+  >
+
+</head>
+
+<body class="login-body">
+
+<div class="login-container">
+
+  <div class="login-brand">
+
+    <span class="login-icon">
+
+      🥑
+
+    </span>
+
+    <h1 class="login-title">
+
+      Chilepal
+
+    </h1>
+
+    <p class="login-sub">
+
+      Sistema de Gestión
+
+    </p>
+
+  </div>
+
+  
+
+  {% with messages = get_flashed_messages() %}
+
+    {% if messages %}
+
+      {% for msg in messages %}
+
+        <div class="flash-msg">
+
+          {{ msg }}
+
+        </div>
+
+      {% endfor %}
+
+    {% endif %}
+
+  {% endwith %}
+
+  
+
+  <form
+
+    class="login-form"
+
+    method="POST"
+
+    action="/login"
+  >
+
+    
+
+    <div class="form-tabs">
+
+      <button
+
+        type="button"
+
+        class="tab active"
+
+        onclick="
+          setTipo(
+            'cliente',
+            this
+          )
+        "
+      >
+
+        Cliente
+
+      </button>
+
+      <button
+
+        type="button"
+
+        class="tab"
+
+        onclick="
+          setTipo(
+            'empleado',
+            this
+          )
+        "
+      >
+
+        Empleado / Admin
+
+      </button>
+
+    </div>
+
+    <input
+      type="hidden"
+      name="tipo"
+      id="tipo_input"
+      value="cliente"
+    >
+
+    <div class="form-group">
+
+      <label>
+        Correo electrónico
+      </label>
+
+      <input
+        type="email"
+        name="email"
+        required
+        placeholder="correo@ejemplo.cl"
+      >
+
+    </div>
+
+    
+
+    <div class="form-group">
+
+      <label>
+        Contraseña
+      </label>
+
+      <input
+        type="password"
+        name="password"
+        required
+        placeholder="••••••••"
+      >
+
+    </div>
+
+    <button
+      type="submit"
+      class="btn-primary btn-full"
+    >
+
+      Ingresar
+
+    </button>
+
+  </form>
+
+  
+
+  <p class="login-register">
+
+    ¿No tienes cuenta?
+
+    <a href="/registro">
+
+      Regístrate aquí
+
+    </a>
+
+  </p>
+
+</div>
+
+<script>
+
+function setTipo(tipo, btn) {
+
+  document.getElementById(
+    'tipo_input'
+  ).value = tipo
+
+  document
+    .querySelectorAll('.tab')
+
+    .forEach(
+      t => t.classList.remove('active')
+    )
+
+  btn.classList.add('active')
+}
+
+</script>
+
+</body>
+
+</html>
